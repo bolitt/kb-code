@@ -1,0 +1,36 @@
+<html>
+<head>
+	<script language="javascript">
+		function $(id) { return document.getElementById(id); }
+		function getError(e) {
+			var str = "<p>Error: </p>";
+			for(var p in e){ str += ("<p>" + p + "=" + e[p] + "</p>") ; }
+			return str;
+        }
+	
+		function calculate()
+		{
+			try { 
+				var result = eval($('expr').value); 
+				$('result').innerHTML = result;
+				$('error').innerHTML = "";
+			} 
+			catch (e) {
+				$('result').innerHTML = "[error]";
+				$('error').innerHTML = getError(e);
+			}
+		}
+	</script>
+</head>
+
+<body>
+	<div>
+		<span>Calculator:</span>
+		<input type="text" id="expr"></input>
+		<span>=</span>
+		<span id="result"></span>
+		<button onclick="calculate()">OK</button>
+	</div>
+	<div id="error"></div>
+</body>
+</html>
