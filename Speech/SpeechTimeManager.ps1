@@ -8,6 +8,15 @@ $start = date
 if ( !(test-path $dir) ) { mkdir $dir }
 
 
+Function Say($msg)
+{
+	$voice = (New-Object -ComObject SAPI.SpVoice)
+	$vlist = $voice.getVoices()
+	$voice.Voice = $vlist.item(3)
+	$voice.Speak($msg)
+}
+
+
 while ($true)
 {
 	$cases = @{"上网" = $false; "编程" = $false; "文档" = $false; "聊天" = $false}
@@ -15,17 +24,20 @@ while ($true)
 	$titles | % { #这部分用来匹配窗口标题并进行统计，可以自由定义
 		if ($_ -match "chrome") { 
 			$cases["上网"] = $true
+			Say("您正在上网。请不要忘了工作！")
 		}
 		if ( ($_ -match "devenv") -or 
 			 ($_ -match "iexplore")
 			) { 
 			$cases["编程"] = $true
+			Say("您正在编程。请注意劳逸结合！")
 		}
 		if ( ($_ -match "googletalk") -or 
 			 ($_ -match "QQ") -or
 			 ($_ -match "communicator")
 			) { 
 			$cases["聊天"] = $true
+			Say("您正在聊天。请不要忘了工作！")
 		}
 		if ( ($_ -match "WINWORD") -or 
 			 ($_ -match "EXCEL") -or
@@ -34,6 +46,7 @@ while ($true)
 			 ($_ -match "ONENOTE") 
 			) { 
 			$cases["文档"] = $true
+			Say("您正在编辑文档。请注意劳逸结合！")
 		}
 	}
 	foreach ($k in $cases.Keys) {
